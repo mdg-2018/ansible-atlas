@@ -1,0 +1,32 @@
+# create an Atlas cluster
+- hosts: localhost
+  connection: local
+  vars:
+    project_id: ""
+    public_key: ""
+    private_key: ""
+    cluster_name: "sample"
+  tasks:
+    #use the uri module to create a cluster
+    - name: launch Atlas cluster
+      uri:
+        url: "https://cloud.mongodb.com/api/atlas/v1.0/groups/{{ project_id }}/clusters"
+        user: "{{ public_key }}"
+        password: "{{ private_key }}"
+        method: POST
+        body: "{{ lookup('ansible.builtin.file','cluster.json') }}"
+        status_code: 201
+        body_format: json
+    #check the status of the cluster, continue after cluster state reaches IDLE
+    - name: Check status of Atlas cluster
+      uri:
+        url: "https://cloud.mongodb.com/api/atlas/v1.0/groups/{{ project_id }}/clusters/{{ cluster_name }}"
+        user: "{{ public_key }}"
+        password: "{{ private_key }}"
+        method: GET
+        status_code: 200
+        body_format: json
+      register: result
+      until: result.json.stateName == "IDLE"
+      delay: 30
+      retries: 100

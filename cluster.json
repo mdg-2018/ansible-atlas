@@ -1,0 +1,12 @@
+{
+    "autoScaling": {
+        "diskGBEnabled": true
+    },
+    "backupEnabled": false,
+    "name": "sample",
+    "providerSettings": {
+        "providerName": "AWS",
+        "instanceSizeName": "M10",
+        "regionName": "US_EAST_1"
+    }
+}

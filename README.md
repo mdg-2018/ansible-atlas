@@ -1,0 +1,2 @@
+### Using the MongoDB Atlas API with Ansible
+While Atlas has native support for Terraform and AWS Cloud Formation, it does not have it's own module for Ansible (another popular infrastructure management tool). This project provides some examples for using Ansible's URI module to call the Atlas API to manage your projects, clusters, and other infrastructure. Examples are all in create-cluster.yml.
